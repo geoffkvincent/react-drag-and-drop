@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SeedData from './SeedData'
+import Column from './Column'
 
 class App extends Component {
+  state = SeedData
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    return this.state.columnOrder.map(columnId =>{
+      const column = this.state.columns[columnId];
+      const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+
+      return <Column key={column.id} column={column} tasks={tasks} />
+    })
   }
 }
-
 export default App;
