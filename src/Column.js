@@ -4,7 +4,7 @@ import Task from './Task'
 
 const Container = styled.div`
   margin: 8px;
-  border: 1px;
+  border: 1px solidblack;
   border-radius: 2px;
 `;
 
