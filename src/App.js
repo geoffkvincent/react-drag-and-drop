@@ -21,13 +21,13 @@ class App extends React.Component {
     }
 
     const column = this.state.columns[source.droppableId]
-    const newTaskIds = Array.from(column.taskids)
+    const newTaskIds = Array.from(column.taskIds)
     newTaskIds.splice(source.index, 1)
     newTaskIds.splice(destination.index, 0, draggableId)
 
     const newColumn = {
       ...column,
-      tasksIds: newTaskIds,
+      taskIds: newTaskIds,
     }
 
     const newState = {
@@ -35,7 +35,7 @@ class App extends React.Component {
       columns: {
         ...this.state.columns,
         [newColumn.id]: newColumn,
-      },
+      }
     };
 
     this.setState(newState)
