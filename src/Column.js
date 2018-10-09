@@ -17,12 +17,14 @@ const TaskList = styled.div`
 `;
 
 export default class Column extends React.Component {
+  
   render() {
+    const {tasks} = this.props
     return (
       <Container>
         <Title>{this.props.column.title}</Title>
         <TaskList>
-          {this.props.tasks.map(task => <Task key={task.id} task={task} />)}
+          {tasks.map(task => <Task key={task.id} task={task} />)}
         </TaskList>
       </Container>
     )
