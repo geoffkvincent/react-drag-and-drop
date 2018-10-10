@@ -50,7 +50,29 @@ class App extends React.Component {
       return
     }
 
-    const newTaskIds = Array.from(start.taskIds)
+    const startTaskIds = Array.from(start.taskIds)
+    startTaskIds.splice(source.index, 1)
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    }
+
+    const finishTaskIds = Array.from(finish.taskIds)
+    startTaskIds.splice(source.index, 1)
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    }
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    }
+    this.setState(newState)
   }
 
   render() { 
