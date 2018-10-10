@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Droppable } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Task from './Task'
 
 const Container = styled.div`
@@ -31,23 +31,29 @@ export default class Column extends React.Component {
   render() {
     const {tasks} = this.props
     return (
-      <Container>
-        <Title>{this.props.column.title}</Title>
-        <Droppable droppableId={this.props.column.id}>
-          { (provided, snapshot) => ( 
-            <TaskList
-              innerRef={provided.innerRef}
-              {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}
-            >
-              {tasks.map((task, index) => (
-                <Task key={task.id} task={task} index={index} />
-              ))}
-              {provided.placeholder}
-            </TaskList>
-          )}
-        </Droppable>
-      </Container>
+      <Draggable draggableId={this.props.column.id} index={this.props.index}>
+        {provided => (
+          <Container {...provided.draggableProps} innerRef={provided.innerRef}>
+            <Title {...provided.dragHandleProps}>
+              {this.props.column.title}
+            </Title>
+            <Droppable droppableId={this.props.column.id} type="task">
+              { (provided, snapshot) => ( 
+                <TaskList
+                  innerRef={provided.innerRef}
+                  {...provided.droppableProps}
+                  isDraggingOver={snapshot.isDraggingOver}
+                >
+                  {tasks.map((task, index) => (
+                    <Task key={task.id} task={task} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </TaskList>
+              )}
+            </Droppable>
+          </Container>
+        )}
+      </Draggable>
     )
   }
 }
