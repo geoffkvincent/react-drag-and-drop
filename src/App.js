@@ -12,7 +12,7 @@ class App extends React.Component {
   state = initialData;
 
   onDragEnd = result => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
     if (!destination) {
       return;
@@ -23,6 +23,19 @@ class App extends React.Component {
       destination.index === source.index
     ) {
       return;
+    }
+
+    if (type === 'column') {
+      const newColumnOrder = Array.from(this.state.columnOrder)
+      newColumnOrder.splice(source.index, 1)
+      newColumnOrder.splice(destination.index, 0, draggableId)
+
+      const newState = {
+        ...this.state,
+        columnOrder: newColumnOrder,
+      }
+      this.setState(newState)
+      return
     }
 
     const start = this.state.columns[source.droppableId]
