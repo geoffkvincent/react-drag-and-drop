@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import initialData from './initial-data'
 import Column from './column'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 const Container = styled.div`
   display: flex;
@@ -78,14 +78,26 @@ class App extends React.Component {
   render() { 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Container>
-          {this.state.columnOrder.map(columnId => {
-            const column = this.state.columns[columnId];
-            const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+        <Droppable 
+          droppableId="all-columns" 
+          direction="horizontal" 
+          type="column"
+        >
+          {provided => (
+            <Container
+              {...provided.droppableProps}
+              innerRef={provided.innerRef}
+            >
+              {this.state.columnOrder.map(columnId => {
+                const column = this.state.columns[columnId];
+                const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
 
-            return <Column key={column.id} column={column} tasks={tasks} />
-          })}
-        </Container>
+                return <Column key={column.id} column={column} tasks={tasks} />
+              })}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
       </DragDropContext>
     )
   }   
