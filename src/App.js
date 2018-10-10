@@ -58,7 +58,7 @@ class App extends React.Component {
     }
 
     const finishTaskIds = Array.from(finish.taskIds)
-    startTaskIds.splice(source.index, 1)
+    finishTaskIds.splice(destination.index, 0, draggableId)
     const newFinish = {
       ...finish,
       taskIds: finishTaskIds,
