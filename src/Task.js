@@ -10,6 +10,8 @@ const Container = styled.div`
   background-color: ${props => (props.isDragging ? 'hotpink' : 'white')};
 `;
 
+
+
 export default class Task extends React.Component {
   render() {
     return (
